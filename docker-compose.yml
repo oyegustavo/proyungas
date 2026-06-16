@@ -1,0 +1,51 @@
+version: '3.7'
+services: 
+    servicio-eureka-server:
+        build: ./servicio-eureka-server-master
+        image: springboot-servicio-eureka-server:v1
+        ports: 
+            - "8761:8761"
+        restart: always
+        networks: 
+                - servicios
+    servicios-postgres12:
+        image: postgres:12-alpine
+        ports: 
+            - "5432:5432"
+        restart: always
+        networks: 
+                - servicios
+        environment: 
+                POSTGRES_PASSWORD: admin
+                POSTGRES_DB: admin
+    servicio-usuarios:
+        image: servicio-usuarios:v1
+        restart: always
+        networks: 
+                - servicios
+        depends_on: 
+            - servicio-eureka-server
+            - servicios-postgres12
+    servicio-zuul-server:
+        image: springboot-servicio-zuul-server:v1
+        ports: 
+            - "8090:8090"
+        restart: always
+        networks: 
+                - servicios
+        depends_on: 
+            - servicio-eureka-server
+            - servicio-usuarios
+    servicio-oauth:
+        image: springboot-servicio-zuul-server:v1
+        ports: 
+            - "9100:9100"
+        restart: always
+        networks: 
+                - servicios
+        depends_on: 
+            - servicio-eureka-server
+            - servicios-postgres12
+            - servicio-usuarios   
+networks: 
+    servicios: {}
