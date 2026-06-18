@@ -1,6 +1,5 @@
-package gov.justucuman.usuarios.models.entity;
+package ar.org.proyungas.usuarios.infrastructure.adapter.output.persistence.entity;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -15,21 +14,33 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Entity
-@Table(name="usuarios")
-@Data
-public class User implements Serializable{
-
-	private static final long serialVersionUID = 4002221912401133094L;
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@Table(name = "usuarios")
+public class UserEntity {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(name ="cuit_cuil", unique=true,length=20)
+	@Column(name ="cuit_cuil", unique=true,length=20, nullable = false)
 	private String username;
+	
+	@Column(name ="nombre_completo", length=200, nullable = false)
+	private String fullname;
+	
+	@Column(name ="email", length=254, nullable = false)
+	private String email;
 	
 	@Column(length=100)
 	private String password;
@@ -41,6 +52,5 @@ public class User implements Serializable{
 	@JoinTable(name="users_roles",joinColumns=@JoinColumn(name="usuario_id"),
 	inverseJoinColumns=@JoinColumn(name="rol_id"),
 	uniqueConstraints = {@UniqueConstraint(columnNames= {"usuario_id","rol_id"})})
-	private List<Role> roles;
-	
+	private List<RoleEntity> roles;
 }

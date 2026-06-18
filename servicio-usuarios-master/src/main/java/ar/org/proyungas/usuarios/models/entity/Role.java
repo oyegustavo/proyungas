@@ -1,4 +1,4 @@
-package gov.justucuman.usuarios.models.entity;
+package ar.org.proyungas.usuarios.models.entity;
 
 import java.io.Serializable;
 
@@ -24,5 +24,4 @@ public class Role implements Serializable{
 	
 	@Column(unique=true,length=30)
 	private String role;
-
 }

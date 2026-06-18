@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.3.0.RELEASE</version>
+				<version>2.5.1</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>gov.justucuman.usuarios</groupId>
@@ -15,8 +15,8 @@
 	<description>servicio-usuarios</description>
 
 	<properties>
-		<java.version>1.8</java.version>
-		<spring-cloud.version>Hoxton.SR4</spring-cloud.version>
+	    <java.version>1.8</java.version>
+	    <spring-cloud.version>2020.0.3</spring-cloud.version>
 	</properties>
 
 	<dependencies>
@@ -32,7 +32,21 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
-
+		<dependency>
+		  <groupId>org.projectlombok</groupId>
+		  <artifactId>lombok-mapstruct-binding</artifactId>
+		  <version>0.2.0</version>
+		  <scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct</artifactId>
+			<version>1.5.4.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -69,29 +83,77 @@
 			<artifactId>spring-cloud-starter-sleuth</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-zipkin</artifactId>
+  		<groupId>com.fasterxml.jackson.datatype</groupId>
+  		<artifactId>jackson-datatype-jsr310</artifactId>
+  		<version>2.12.3</version>	
 		</dependency>
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-lang3</artifactId>
+		    <version>3.12.0</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.springdoc</groupId>
+		    <artifactId>springdoc-openapi-ui</artifactId>
+		    <version>1.5.8</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.springdoc</groupId>
+		    <artifactId>springdoc-openapi-data-rest</artifactId>
+		    <version>1.5.8</version>
+		</dependency>
+
 	</dependencies>
 
 	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>${spring-cloud.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
+	    <dependencies>
+	        <dependency>
+	            <groupId>org.springframework.cloud</groupId>
+	            <artifactId>spring-cloud-dependencies</artifactId>
+	            <version>${spring-cloud.version}</version>
+	            <type>pom</type>
+	            <scope>import</scope>
+	        </dependency>
+	    </dependencies>
 	</dependencyManagement>
 
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
+			  <groupId>org.apache.maven.plugins</groupId>
+			  <artifactId>maven-compiler-plugin</artifactId>
+			  <version>3.8.1</version>
+			  <configuration>
+			    <source>1.8</source>
+			    <target>1.8</target>
+			    <annotationProcessorPaths>
+			     <path>
+			        <groupId>org.projectlombok</groupId>
+			        <artifactId>lombok</artifactId>
+			        <version>1.18.32</version>
+			      </path>
+			        <path>
+				    <groupId>org.projectlombok</groupId>
+				    <artifactId>lombok-mapstruct-binding</artifactId>
+				    <version>0.2.0</version>
+				  </path>
+			      <path>
+			        <groupId>org.mapstruct</groupId>
+			        <artifactId>mapstruct-processor</artifactId>
+			        <version>1.5.4.Final</version>
+			      </path>
+
+			    </annotationProcessorPaths>
+				<compilerArgs>
+				    <arg>-Amapstruct.defaultComponentModel=spring</arg>
+				    <arg>-Amapstruct.constructorInjection=true</arg>
+				</compilerArgs>
+			  </configuration>
 			</plugin>
+			<plugin>
+		      <groupId>org.springframework.boot</groupId>
+		      <artifactId>spring-boot-maven-plugin</artifactId>
+		    </plugin>
 		</plugins>
 	</build>
 

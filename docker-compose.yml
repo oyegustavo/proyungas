@@ -19,6 +19,7 @@ services:
                 POSTGRES_PASSWORD: admin
                 POSTGRES_DB: admin
     servicio-usuarios:
+        build: ./servicio-usuarios-master
         image: servicio-usuarios:v1
         restart: always
         networks: 
@@ -27,6 +28,7 @@ services:
             - servicio-eureka-server
             - servicios-postgres12
     servicio-zuul-server:
+        build: ./servicio-zuul-server-master
         image: springboot-servicio-zuul-server:v1
         ports: 
             - "8090:8090"
@@ -37,6 +39,7 @@ services:
             - servicio-eureka-server
             - servicio-usuarios
     servicio-oauth:
+        build: ./servicio-oauth-master
         image: springboot-servicio-zuul-server:v1
         ports: 
             - "9100:9100"

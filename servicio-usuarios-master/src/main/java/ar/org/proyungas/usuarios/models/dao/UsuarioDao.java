@@ -1,10 +1,10 @@
-package gov.justucuman.usuarios.models.dao;
+package ar.org.proyungas.usuarios.models.dao;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.data.rest.core.annotation.RestResource;
 
-import gov.justucuman.usuarios.models.entity.User;
+import ar.org.proyungas.usuarios.models.entity.User;
 
 
 /**
