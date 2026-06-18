@@ -8,7 +8,6 @@ import ar.org.proyungas.usuarios.application.create.UserCreateResult;
 
 @Mapper(componentModel = "spring", uses = {RoleCreateRestMapper.class})
 public interface UserCreateRestMapper {
-    @Mapping(source = "id", target = "id")
     @Mapping(source = "username", target = "username")
     @Mapping(source = "fullname", target = "fullname")
     @Mapping(source = "email", target = "email")

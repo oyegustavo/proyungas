@@ -13,5 +13,4 @@ import lombok.ToString;
 @ToString
 public class RoleCreateRequest {
 	Integer id;
-	String role;
 }

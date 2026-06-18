@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserCreateCommand {
-	Integer id;
 	String username;
 	String fullname;
 	String email;

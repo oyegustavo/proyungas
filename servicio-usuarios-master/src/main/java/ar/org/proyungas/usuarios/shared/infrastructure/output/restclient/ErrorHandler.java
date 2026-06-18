@@ -69,6 +69,11 @@ public class ErrorHandler {
         return buildResponseError(HttpStatus.METHOD_NOT_ALLOWED, ErrorCode.BAD_REQUEST_ERROR);
     }
 
+    @ExceptionHandler(RoleNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<ErrorResponse> handle(RoleNotFoundException ex) {
+        return buildResponseError(HttpStatus.NOT_FOUND, ErrorCode.ROLE_NOT_FOUND_ERROR);
+    }
 
     private ResponseEntity<ErrorResponse> buildResponseError(
             HttpStatus httpStatus,
