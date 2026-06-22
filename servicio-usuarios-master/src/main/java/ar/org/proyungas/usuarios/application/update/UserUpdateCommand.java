@@ -1,20 +1,22 @@
-package ar.org.proyungas.usuarios.application.create;
+package ar.org.proyungas.usuarios.application.update;
 
 import java.util.List;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
-@AllArgsConstructor
+@Builder
 @Data
-public class UserCreateResult {
+@AllArgsConstructor
+@NoArgsConstructor
+public class UserUpdateCommand {
 	Integer id;
 	String username;
 	String fullname;
 	String email;
 	String password;
 	Boolean enabled;
-	List<RoleCreateResult> roles;
+	List<RoleUpdateCommand> roles;
 }

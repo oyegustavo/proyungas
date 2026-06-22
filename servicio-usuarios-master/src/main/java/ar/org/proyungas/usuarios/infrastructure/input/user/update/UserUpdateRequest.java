@@ -1,4 +1,4 @@
-package ar.org.proyungas.usuarios.infrastructure.input.user.create;
+package ar.org.proyungas.usuarios.infrastructure.input.user.update;
 
 import java.util.List;
 
@@ -6,16 +6,17 @@ import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Builder
-@Getter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class UserCreateRequest {
+public class UserUpdateRequest {
+	Integer id;
 	@NotNull(message = "username must not be null")
 	String username;
 	@NotNull(message = "fullname must not be null")
@@ -24,5 +25,5 @@ public class UserCreateRequest {
 	String email;
 	String password;
 	Boolean enabled;
-	List<RoleCreateRequest> roles;
+	List<RoleUpdateRequest> roles;
 }

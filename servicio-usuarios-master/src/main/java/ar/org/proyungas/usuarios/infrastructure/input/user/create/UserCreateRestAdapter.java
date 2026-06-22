@@ -20,7 +20,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.media.Content;
 
 @RestController
-@RequestMapping("/usuarios/create")
+@RequestMapping("/users")
 @Slf4j
 @AllArgsConstructor
 public class UserCreateRestAdapter {
@@ -29,7 +29,7 @@ public class UserCreateRestAdapter {
 
 	private final UserCreateRestMapper mapper;
 
-	@Operation(summary = "User Create", tags = "usuarios/create")
+	@Operation(summary = "User Create", tags = "users")
 	@ApiResponses(value = { @ApiResponse(responseCode = "201", description = "Created"),
 			@ApiResponse(responseCode = "400", description = "Bad Request", content = @Content),
 			@ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
@@ -39,7 +39,7 @@ public class UserCreateRestAdapter {
 
 	@PostMapping
 	public ResponseEntity<UserCreateResponse> perform(@RequestBody @Valid UserCreateRequest request) {
-		log.info("Starting executing service POST /v2/parameters/private/crime-types - REQUEST: {}", request);
+		log.info("Starting executing service POST /users - REQUEST: {}", request);
 		return new ResponseEntity<>(mapper.toResponse(userCreate.perform(mapper.toCommand(request))),
 				HttpStatus.CREATED);
 	}
