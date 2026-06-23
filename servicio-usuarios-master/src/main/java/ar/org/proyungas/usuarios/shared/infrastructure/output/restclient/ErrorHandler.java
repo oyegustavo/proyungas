@@ -74,6 +74,36 @@ public class ErrorHandler {
     public ResponseEntity<ErrorResponse> handle(RoleNotFoundException ex) {
         return buildResponseError(HttpStatus.NOT_FOUND, ErrorCode.ROLE_NOT_FOUND_ERROR);
     }
+    
+    @ExceptionHandler(InvalidFilterException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ErrorResponse> handle(InvalidFilterException ex) {
+        return buildResponseError(HttpStatus.BAD_REQUEST, ErrorCode.INVALID_FILTER);
+    }
+    
+    @ExceptionHandler(InvalidFilterTypeException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ErrorResponse> handle(InvalidFilterTypeException ex) {
+        return buildResponseError(HttpStatus.BAD_REQUEST, ErrorCode.INVALID_FILTER_TYPE_ERROR);
+    }
+    
+    @ExceptionHandler(UserBadRequestException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ErrorResponse> handle(UserBadRequestException ex) {
+        return buildResponseError(HttpStatus.BAD_REQUEST, ErrorCode.USER_BAD_REQUEST);
+    }
+    
+    @ExceptionHandler(InvalidUserException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ErrorResponse> handle(InvalidUserException ex) {
+        return buildResponseError(HttpStatus.BAD_REQUEST, ErrorCode.INVALID_USER_ERROR);
+    }
+    
+    @ExceptionHandler(MalformedFilterException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ErrorResponse> handle(MalformedFilterException ex) {
+        return buildResponseError(HttpStatus.BAD_REQUEST, ErrorCode.MALFORMED_FILTER_ERROR);
+    }
 
     private ResponseEntity<ErrorResponse> buildResponseError(
             HttpStatus httpStatus,
