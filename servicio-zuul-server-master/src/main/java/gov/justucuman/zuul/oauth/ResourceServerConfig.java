@@ -42,11 +42,11 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 		http.authorizeRequests()
 		.antMatchers("/api/security/oauth/token").permitAll()
 		
-		.antMatchers(HttpMethod.GET, "/api/users/**").hasAuthority("ROLE_ADMIN")
-		.antMatchers(HttpMethod.PUT, "/api/users/**").hasAuthority("ROLE_ADMIN")
-		.antMatchers(HttpMethod.POST, "/api/users/**").hasAuthority("ROLE_ADMIN")
-		.antMatchers(HttpMethod.DELETE, "/api/users/**").hasAuthority("ROLE_ADMIN")
-		.antMatchers(HttpMethod.POST, "**/usuarios/create**").hasAuthority("ROLE_ADMIN")
+		.antMatchers(HttpMethod.GET, "/api/usuarios/users**").hasAuthority("ROLE_ADMIN")
+		.antMatchers(HttpMethod.PUT, "/api/usuarios/users**").hasAuthority("ROLE_ADMIN")
+		.antMatchers(HttpMethod.POST, "/api/usuarios/users**").hasAuthority("ROLE_ADMIN")
+		.antMatchers(HttpMethod.DELETE, "/api/usuarios/users**").hasAuthority("ROLE_ADMIN")
+		.antMatchers(HttpMethod.POST, "/api/usuarios/users**").hasAuthority("ROLE_ADMIN")
 		
 ////		.antMatchers(HttpMethod.GET, "/api/menu/**").hasAuthority("ROLE_ADMIN")
 //		.antMatchers(HttpMethod.GET, "/api/menu/**").permitAll()
