@@ -26,7 +26,6 @@ services:
                 - servicios
         depends_on: 
             - servicio-eureka-server
-            - servicio-usuarios
     servicio-oauth:
         build: ./servicio-oauth-master
         image: springboot-servicio-zuul-server:v1
@@ -36,7 +35,6 @@ services:
         networks: 
                 - servicios
         depends_on: 
-            - servicio-eureka-server
-            - servicio-usuarios   
+            - servicio-eureka-server 
 networks: 
     servicios: {}
