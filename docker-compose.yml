@@ -8,16 +8,6 @@ services:
         restart: always
         networks: 
                 - servicios
-    servicios-postgres12:
-        image: postgres:12-alpine
-        ports: 
-            - "5432:5432"
-        restart: always
-        networks: 
-                - servicios
-        environment: 
-                POSTGRES_PASSWORD: admin
-                POSTGRES_DB: admin
     servicio-usuarios:
         build: ./servicio-usuarios-master
         image: servicio-usuarios:v1
