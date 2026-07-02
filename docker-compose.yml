@@ -16,7 +16,6 @@ services:
                 - servicios
         depends_on: 
             - servicio-eureka-server
-            - servicios-postgres12
     servicio-zuul-server:
         build: ./servicio-zuul-server-master
         image: springboot-servicio-zuul-server:v1
@@ -38,7 +37,6 @@ services:
                 - servicios
         depends_on: 
             - servicio-eureka-server
-            - servicios-postgres12
             - servicio-usuarios   
 networks: 
     servicios: {}
