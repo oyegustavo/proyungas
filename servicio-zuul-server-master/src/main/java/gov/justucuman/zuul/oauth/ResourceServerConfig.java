@@ -48,26 +48,12 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 		.antMatchers(HttpMethod.DELETE, "/api/usuarios/users**").hasAuthority("ROLE_ADMIN")
 		.antMatchers(HttpMethod.POST, "/api/usuarios/users**").hasAuthority("ROLE_ADMIN")
 		
-////		.antMatchers(HttpMethod.GET, "/api/menu/**").hasAuthority("ROLE_ADMIN")
-//		.antMatchers(HttpMethod.GET, "/api/menu/**").permitAll()
-//		.antMatchers(HttpMethod.PUT, "/api/menu/**").hasAuthority("ROLE_ADMIN")
-//		.antMatchers(HttpMethod.POST, "/api/menu/**").hasAuthority("ROLE_ADMIN")
-//		.antMatchers(HttpMethod.DELETE, "/api/menu/**").hasAuthority("ROLE_ADMIN")
-//		
-//		.antMatchers(HttpMethod.GET, "/api/streaming/**").permitAll()
-//		.antMatchers(HttpMethod.PUT, "/api/streaming/**").hasAuthority("ROLE_ADMIN")
-//		.antMatchers(HttpMethod.POST, "/api/streaming/**").hasAuthority("ROLE_ADMIN")
-//		.antMatchers(HttpMethod.DELETE, "/api/streaming/**").hasAuthority("ROLE_ADMIN")
-//		
-//		.antMatchers(HttpMethod.GET, "/api/games/**").permitAll()
-//		.antMatchers(HttpMethod.PUT, "/api/games/**").hasAuthority("ROLE_ADMIN")
-//		.antMatchers(HttpMethod.POST, "/api/games/**").hasAuthority("ROLE_ADMIN")
-//		.antMatchers(HttpMethod.DELETE, "/api/games/**").hasAuthority("ROLE_ADMIN")
-//		
-//		.antMatchers(HttpMethod.GET, "/api/files/**").permitAll()
-//		.antMatchers(HttpMethod.PUT, "/api/files/**").hasAuthority("ROLE_ADMIN")
-//		.antMatchers(HttpMethod.POST, "/api/files/**").hasAuthority("ROLE_ADMIN")
-//		.antMatchers(HttpMethod.DELETE, "/api/files/**").hasAuthority("ROLE_ADMIN")
+		.antMatchers(HttpMethod.GET, "/api/gestor/action**").hasAuthority("ROLE_SOLICITANTE")
+		.antMatchers(HttpMethod.PUT, "/api/gestor/action**").hasAuthority("ROLE_ADMIN")
+		.antMatchers(HttpMethod.POST, "/api/gestor/action**").hasAuthority("ROLE_ADMIN")
+		.antMatchers(HttpMethod.DELETE, "/api/gestor/action**").hasAuthority("ROLE_ADMIN")
+		
+		.antMatchers(HttpMethod.GET, "/api/gestor/plan-type**").hasAuthority("ROLE_SOLICITANTE")
 		
 		.anyRequest().authenticated();
 	}
