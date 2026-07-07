@@ -98,7 +98,10 @@
 		    <artifactId>springdoc-openapi-data-rest</artifactId>
 		    <version>1.5.8</version>
 		</dependency>
-
+		<dependency>
+		    <groupId>org.flywaydb</groupId>
+		    <artifactId>flyway-core</artifactId>
+		</dependency>
 	</dependencies>
 
 	<dependencyManagement>
