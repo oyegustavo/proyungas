@@ -1,0 +1,127 @@
+version: '3.7'
+services: 
+    postgres-usuarios:
+        image: postgres:14
+        container_name: postgres_usuarios
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: admin
+          POSTGRES_DB: sgv_usuarios
+        networks:
+          - servicios
+        restart: always
+    postgres-gestor:
+        image: postgres:14
+        container_name: postgres_gestor
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: admin
+          POSTGRES_DB: sgv_gestor
+        networks:
+          - servicios
+        restart: always
+    servicio-eureka-server:
+        build: ./proyungas-usuarios/servicio-eureka-server-master
+        image: springboot-servicio-eureka-server:v1
+        ports: 
+            - "8761:8761"
+        restart: always
+        networks: 
+                - servicios
+    servicio-usuarios:
+        build: ./proyungas-usuarios/servicio-usuarios-master
+        image: servicio-usuarios:v1
+        restart: always
+        networks: 
+                - servicios
+        depends_on: 
+            - servicio-eureka-server
+            - postgres-usuarios
+    servicio-zuul-server:
+        build: ./proyungas-usuarios/servicio-zuul-server-master
+        image: springboot-servicio-zuul-server:v1
+        ports: 
+            - "8090:8090"
+        restart: always
+        networks: 
+                - servicios
+        depends_on: 
+            - servicio-eureka-server
+    servicio-oauth:
+        build: ./proyungas-usuarios/servicio-oauth-master
+        image: springboot-servicio-oauth:v1
+        ports: 
+            - "9100:9100"
+        restart: always
+        networks: 
+                - servicios
+        depends_on: 
+            - servicio-eureka-server 
+    proyungas-gestor:
+        build: ./proyungas-gestor
+        image: proyungas-gestor:v1
+        restart: always
+        networks: 
+                - servicios
+        depends_on: 
+            - servicio-eureka-server
+            - postgres-gestor
+
+            
+    proyungas-files:
+        build: ./proyungas-files
+        image: proyungas-files:v1
+        restart: always
+        networks: 
+                - servicios
+        depends_on: 
+            - servicio-eureka-server
+            - garage 
+    
+    proyungas-email:
+      build: ./proyungas-email
+      image: proyungas-email:v1
+      restart: always
+      networks:
+        - servicios
+      depends_on:
+        redis:
+          condition: service_healthy
+        servicio-eureka-server:
+          condition: service_started
+      environment:
+        REDIS_HOST: redis
+        REDIS_PORT: 6379
+            
+    garage:
+        image: dxflrs/garage:v2.3.0  # Asegúrate de usar una versión estable de v2
+        container_name: garage_s3
+        ports:
+          - "3900:3900" # Puerto S3 para Spring Boot
+          - "3901:3901" # Puerto RPC
+        volumes:
+          - ./garage.toml:/etc/garage.toml:ro
+          - garage_meta:/var/lib/garage/meta
+          - garage_data:/var/lib/garage/data
+        restart: unless-stopped
+        
+    redis:
+        image: redis:7.2
+        container_name: redis
+        ports:
+          - "6379:6379"
+        networks:
+          - servicios
+        restart: always
+        healthcheck:
+          test: ["CMD", "redis-cli", "ping"]
+          interval: 5s
+          timeout: 3s
+          retries: 5
+
+networks: 
+    servicios: {}
+volumes:
+    garage_meta:
+    garage_data:
+    pgdata:
