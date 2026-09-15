@@ -5,37 +5,28 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
-public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
+@EnableWebSecurity
+public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Autowired
-	private UserDetailsService usuarioService;
-	
-	@Bean
-	public BCryptPasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+    @Autowired
+    private UserDetailsService usuarioService;
 
-	/* 
-	 * when user initiates session, enter its password and then it will automatically be encrypted 
-	 * to be compared with the password in DB, both in bcrypt
-	 */
-	@Override
-	@Autowired
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(this.usuarioService).passwordEncoder(passwordEncoder());
-	}
 
-	@Bean
-	@Override
-	protected AuthenticationManager authenticationManager() throws Exception {
-		return super.authenticationManager();
-	}
-	
-	
-	
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth, PasswordEncoder encoder) throws Exception {
+        auth.userDetailsService(usuarioService).passwordEncoder(encoder);
+    }
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
 }
+

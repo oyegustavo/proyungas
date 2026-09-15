@@ -6,29 +6,26 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-@EnableFeignClients
-@EnableEurekaClient
 @SpringBootApplication
-public class SpringbootServicioOauthApplication implements CommandLineRunner{
-	
-	@Autowired
-	private BCryptPasswordEncoder passwordEncode;
+@EnableEurekaClient
+@EnableFeignClients
+public class SpringbootServicioOauthApplication implements CommandLineRunner {
 
-	public static void main(String[] args) {
-		SpringApplication.run(SpringbootServicioOauthApplication.class, args);
-	}
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
-	@Override
-	public void run(String... args) throws Exception {
-		String password ="12345";
-		
-		for(int i=0;i<4;i++) {
-			String passwordBcrypt = passwordEncode.encode(password);
-			System.out.println(passwordBcrypt);
-		}
-		
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(SpringbootServicioOauthApplication.class, args);
+    }
 
+    @Override
+    public void run(String... args) {
+        String password = "12345";
+        for (int i = 0; i < 4; i++) {
+            System.out.println(passwordEncoder.encode(password));
+        }
+    }
 }
+
