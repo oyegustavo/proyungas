@@ -21,7 +21,7 @@ services:
           - servicios
         restart: always
     servicio-eureka-server:
-        build: ./proyungas-usuarios/servicio-eureka-server-master
+        build: ./servicio-eureka-server-master
         image: springboot-servicio-eureka-server:v1
         ports: 
             - "8761:8761"
@@ -29,7 +29,7 @@ services:
         networks: 
                 - servicios
     servicio-usuarios:
-        build: ./proyungas-usuarios/servicio-usuarios-master
+        build: ./servicio-usuarios-master
         image: servicio-usuarios:v1
         restart: always
         networks: 
@@ -38,7 +38,7 @@ services:
             - servicio-eureka-server
             - postgres-usuarios
     servicio-zuul-server:
-        build: ./proyungas-usuarios/servicio-zuul-server-master
+        build: ./servicio-zuul-server-master
         image: springboot-servicio-zuul-server:v1
         ports: 
             - "8090:8090"
@@ -48,7 +48,7 @@ services:
         depends_on: 
             - servicio-eureka-server
     servicio-oauth:
-        build: ./proyungas-usuarios/servicio-oauth-master
+        build: ./servicio-oauth-master
         image: springboot-servicio-oauth:v1
         ports: 
             - "9100:9100"
