@@ -55,6 +55,13 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 		
 		.antMatchers(HttpMethod.GET, "/api/gestor/plan-type**").hasAuthority("ROLE_SOLICITANTE")
 		.antMatchers(HttpMethod.PUT, "/api/gestor/vectorial-layer-status**").hasAuthority("ROLE_ADMIN")
+		
+		.antMatchers(HttpMethod.GET, "/api/files/file-manager**").hasAuthority("ROLE_ADMIN")
+		.antMatchers(HttpMethod.PUT, "/api/files/file-manager**").hasAuthority("ROLE_ADMIN")
+		.antMatchers(HttpMethod.POST, "/api/files/file-manager**").hasAuthority("ROLE_ADMIN")
+		.antMatchers(HttpMethod.DELETE, "/api/files/file-manager**").hasAuthority("ROLE_ADMIN")
+		.antMatchers(HttpMethod.POST, "/api/files/file-manager**").hasAuthority("ROLE_ADMIN")
+		
 		.anyRequest().authenticated();
 	}
 
