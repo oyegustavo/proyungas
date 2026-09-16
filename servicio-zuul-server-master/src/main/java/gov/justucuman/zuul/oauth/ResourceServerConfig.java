@@ -9,6 +9,9 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 /**
  * The Class ResourceServerConfig.
@@ -39,7 +42,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
 
-		http.authorizeRequests()
+		http
+		.cors().and()
+		.authorizeRequests()
 		.antMatchers("/api/security/oauth/token").permitAll()
 		
 		.antMatchers(HttpMethod.GET, "/api/usuarios/users**").hasAuthority("ROLE_ADMIN")
@@ -87,18 +92,17 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 		return jwtAccessTokenConverter;
 	}
 
-//	@Bean
-//	public FilterRegistrationBean corsFilter() {
-//		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//		CorsConfiguration config = new CorsConfiguration();
-//		config.setAllowCredentials(true);
-//		config.addAllowedOrigin("*");
-//		config.addAllowedHeader("*");
-//		config.addAllowedMethod("*");
-//		source.registerCorsConfiguration("/**", config);
-//		FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
-//		bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
-//		return bean;
-//	}
+	@Bean
+	public CorsConfigurationSource corsConfigurationSource() {
+	    CorsConfiguration configuration = new CorsConfiguration();
+	    configuration.setAllowCredentials(true);
+	    configuration.addAllowedOrigin("http://localhost:5173"); // React dev server
+	    configuration.addAllowedHeader("*");
+	    configuration.addAllowedMethod("*");
+
+	    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+	    source.registerCorsConfiguration("/**", configuration);
+	    return source;
+	}
 
 }
