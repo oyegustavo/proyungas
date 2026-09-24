@@ -38,9 +38,6 @@ public class UsuarioService implements IUsuarioService, UserDetailsService{
         this.restTemplate = restTemplate;
     }
 	
-	/* looks for user consuming an API rest using Feign into servicio-usuarios
-	 * 
-	 */
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
