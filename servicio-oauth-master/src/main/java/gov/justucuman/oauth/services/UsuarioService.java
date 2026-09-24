@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -13,8 +13,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
-import gov.justucuman.oauth.clients.UsuarioFeignClient;
 import gov.justucuman.oauth.dto.UserDto;
 
 /**
@@ -28,8 +28,15 @@ public class UsuarioService implements IUsuarioService, UserDetailsService{
 	private Logger log =  LoggerFactory.getLogger(UsuarioService.class);
 
 	/** The client. */
-	@Autowired
-	private UsuarioFeignClient client;
+	
+    private final RestTemplate restTemplate;
+    
+    @Value("${servicio.usuarios.url}")
+    private String usuariosBaseUrl;
+    
+    public UsuarioService(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
 	
 	/* looks for user consuming an API rest using Feign into servicio-usuarios
 	 * 
@@ -37,7 +44,11 @@ public class UsuarioService implements IUsuarioService, UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
-		UserDto usuario = client.findByUsername(username);
+        UserDto usuario = restTemplate.getForObject(
+                usuariosBaseUrl + "/users/{username}",
+                UserDto.class,
+                username
+            );
 		
 		if (usuario == null) {
 			log.error("Error en el login, no existe el usuario '"+username+"' en el sistema");
@@ -58,7 +69,11 @@ public class UsuarioService implements IUsuarioService, UserDetailsService{
 
 	@Override
 	public UserDto findByUsername(String username) {
-		return client.findByUsername(username);
+        return restTemplate.getForObject(
+                usuariosBaseUrl + "/users/{username}",
+                UserDto.class,
+                username
+            );
 	}
 
 }

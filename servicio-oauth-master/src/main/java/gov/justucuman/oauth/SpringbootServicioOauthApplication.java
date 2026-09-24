@@ -10,7 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
 @EnableEurekaClient
-@EnableFeignClients
+//@EnableFeignClients
 public class SpringbootServicioOauthApplication implements CommandLineRunner {
 
     @Autowired
