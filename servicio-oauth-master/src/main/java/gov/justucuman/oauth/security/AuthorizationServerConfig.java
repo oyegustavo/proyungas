@@ -16,6 +16,8 @@ import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
+import gov.justucuman.oauth.config.CustomOAuth2ExceptionTranslator;
+
 /**
  * The Class AuthorizationServerConfig.
  */
@@ -33,6 +35,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	
 	@Autowired
 	private InfoAdicionalToken infoAdicionalToken;
+	
+	@Autowired
+	private CustomOAuth2ExceptionTranslator customOAuth2ExceptionTranslator;
+
 
 	/* (non-Javadoc)
 	 * @see org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter#configure(org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer)
@@ -71,7 +77,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 		endpoints.authenticationManager(authenticationManager)
 		.tokenStore(tokenStore())
 		.accessTokenConverter(accessTokenConverter())
-		.tokenEnhancer(tokenEnhancerChain);
+		.tokenEnhancer(tokenEnhancerChain)
+		.exceptionTranslator(customOAuth2ExceptionTranslator);
 	}
 	
 	 /**
@@ -92,7 +99,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Bean	
 	public JwtAccessTokenConverter accessTokenConverter() {
 		JwtAccessTokenConverter jwtAccessTokenConverter= new JwtAccessTokenConverter();
-		jwtAccessTokenConverter.setSigningKey("algun_codigo_secreto_aeiou");
+		jwtAccessTokenConverter.setSigningKey("algun_codigo_secreto_aeiou_mas_largo_123456");
 		return jwtAccessTokenConverter;
 	}
 
