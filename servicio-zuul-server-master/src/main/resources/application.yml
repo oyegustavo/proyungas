@@ -1,0 +1,52 @@
+spring:
+  main:
+    web-application-type: reactive
+  application:
+    name: zuul-server
+  profiles:
+    active: dev
+  webflux:
+    multipart:
+      enabled: true
+      max-file-size: 7700KB
+      max-request-size: 7700KB
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          secret: algun_codigo_secreto_aeiou_mas_largo_123456
+  cloud:
+    gateway:
+      routes:
+        - id: security
+          uri: lb://SERVICIO-OAUTH
+          predicates:
+            - Path=/api/security/oauth/**
+          filters:
+            - RewritePath=/api/security/(?<segment>.*), /${segment}
+
+
+
+
+
+server:
+  port: 8090
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://servicio-eureka-server:8761/eureka
+    register-with-eureka: true
+    fetch-registry: true
+    healthcheck:
+      enabled: true
+  instance:
+    prefer-ip-address: true
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    org.springframework.security: DEBUG
+    reactor.netty: DEBUG
+
+

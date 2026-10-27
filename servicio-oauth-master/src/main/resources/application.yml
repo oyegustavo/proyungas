@@ -1,0 +1,54 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: servicio-oauth
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 5
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL95Dialect
+    show-sql: true
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+
+logging:
+  level:
+    root: INFO
+    org.hibernate.SQL: DEBUG
+    org.springframework.security: DEBUG
+    org.springframework.web: DEBUG
+    org.springframework.cloud.gateway: DEBUG
+    reactor.netty: DEBUG
+  file:
+    name: ./log/oauth.log
+
+server:
+  port: 9100
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://servicio-eureka-server:8761/eureka
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 20000
+
+ribbon:
+  ConnectTimeout: 3000
+  ReadTimeout: 10000
+
+servicio:
+  usuarios:
+    url: http://proyungas-gestor:8094
